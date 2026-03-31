@@ -45,7 +45,15 @@ bundle install
 Then, and every time you update your native dependencies, run:
 
 ```sh
-bundle exec pod install
+bundle exec pod install --project-directory=ios
+```
+
+If you're using Ruby 3.4+ or 4.x and hit `cannot load such file -- kconv`, keep using the project's Bundler setup from the repo root instead of a globally installed CocoaPods or a system Ruby inside `ios/`. This project includes the extra compatibility gem needed by newer Ruby versions.
+
+React Native 0.84 can also require `cmake` while installing Hermes from source. If `pod install` fails with `Unable to locate the executable 'cmake'`, install it first:
+
+```sh
+brew install cmake
 ```
 
 For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
