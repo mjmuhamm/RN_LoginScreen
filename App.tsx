@@ -8,7 +8,7 @@
 import { NewAppScreen } from '@react-native/new-app-screen';
 import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Text, Image, TextInput, Pressable, Button } from 'react-native'
+import { Text, Image, TextInput, Pressable } from 'react-native'
 import { styles } from './src/components/styles';
 import React, { useState } from "react";
 
