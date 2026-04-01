@@ -1,9 +1,9 @@
 import { StyleSheet } from "react-native"; 
 
 
-export const styles = StyleSheet.create({
+export const loginStyles = StyleSheet.create({
     firstViewStyle: {
-        alignItems: "center"
+        alignItems: "center",
     },
 
     logo: {
@@ -136,11 +136,33 @@ export const styles = StyleSheet.create({
     },
     accountButton: {
         color: "blue", marginLeft: 15
+    } 
+});
+
+export const homeStyles = StyleSheet.create({
+    firstView: {
+        alignItems: "center",
+        marginTop: 10
+    },
+    renderListText: {
+        color: "white",
+        padding: 10
+    },
+    renderListButton: {
+        backgroundColor: "indigo", 
+        width: 170, 
+        alignItems: 'center', 
+        borderRadius: 20, 
+        marginTop: 10
+    },
+    flatListView: {
+        marginTop: 15
+    },
+    flatList: {
+        padding: 10
+    },
+    itemStyle: {
+        fontWeight: "bold",
+        fontSize: 16
     }
-
-
-
-
-
- 
 });
