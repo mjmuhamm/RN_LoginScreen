@@ -1,8 +1,9 @@
 import {Text } from 'react-native'
+import { signUpStyles } from '../styles/styles';
 
 function SignUpScreen() {
     return (
-    <Text>SignUpScreen</Text>
+    <Text style={signUpStyles.view}>SignUpScreen</Text>
     )
 }
 

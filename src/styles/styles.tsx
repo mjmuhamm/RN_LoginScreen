@@ -177,3 +177,10 @@ export const homeStyles = StyleSheet.create({
         flexDirection: "row"
     }
 });
+
+
+export const signUpStyles = StyleSheet.create({
+    view: {
+        alignItems: "center"
+    }
+})

@@ -5,15 +5,27 @@ import { loginStyles } from '../styles/styles';
 import SocialButton, { LoginScreenProps } from '../types';
 import { useState } from 'react'
 import {useNavigation, NavigationContainer } from '@react-navigation/native';
+import * as Keychain from 'react-native-keychain';
+import  AsyncStorage from '@react-native-async-storage/async-storage';
+import { storage } from '../store/context/MMKV'
 
 
 
-function LoginScreen1({ navigation } : LoginScreenProps) {
+async function saveLogin(email: string, password: string) {
+  await Keychain.setGenericPassword(email, password);
+}
+
+async function saveEmail(email: string) {
+  await AsyncStorage.setItem('user.email', email);
+}
+
+
+function LoginScreen1({ navigation } : any) {
   const isDarkMode = useColorScheme() === 'dark';
 
 const [ email, setEmail ] = useState("")
 const [ password, setPassword ] = useState("")
-  
+
 
   return (
     <SafeAreaProvider>
@@ -47,7 +59,10 @@ const [ password, setPassword ] = useState("")
           <Text style={loginStyles.checkBoxText}>Remember me</Text>
         </View>
         <Pressable style={loginStyles.signInButton} onPress={
-            () => { if (loginLogic(email, password)) {
+            async () => { if (loginLogic(email, password)) {
+            await saveLogin(email, password); // keychain implementation
+            await AsyncStorage.setItem('user.email', email); // AsyncStorage Implementation
+            storage.set('user.email', email); // mmkv
             navigation.navigate('Home', { email: email });
             }}}>
           <Text style={loginStyles.signInText}>Sign In</Text>

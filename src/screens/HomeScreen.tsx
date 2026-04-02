@@ -3,16 +3,23 @@ import { FlatList } from 'react-native'
 import { homeStyles } from '../styles/styles'
 import { URL } from '../api/url'
 import { ApiInfo, HomeScreenProps } from '../types/index'
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useContext } from 'react'
+// import { WeatherContext } from '../store/context/WeatherContext'
+import { TodoContext } from '../store/context/TodoContext'
+
 
 //Optimization Hooks 
-function HomeScreen({ route } : HomeScreenProps) {
-    const { email } = route.params
+function HomeScreen({ route } : any) {
+    const email = route?.params?.email ?? '';
 
     const [ showCompleted, setShowCompleted ] = useState(false)
     const [ text, setText ] = useState("Show Completed Info")
     
-    const [ info, setInfo ] = useState<ApiInfo[]>([]);
+    // const { weather, setWeather } = useContext(WeatherContext)
+
+    const { info , setInfo } = useContext(TodoContext);
+    
+    // const [ info, setInfo ] = useState<ApiInfo[]>([]);
 
       const loadInfo = async () => {
         setInfo([])
@@ -25,7 +32,7 @@ function HomeScreen({ route } : HomeScreenProps) {
     };
 
     const completedInfo = useMemo(() => {
-        return info.filter(item => item.completed);
+        return info.filter((item: ApiInfo) => item.completed);
     }, [info]);
 
      useEffect(() => {
@@ -41,7 +48,9 @@ function HomeScreen({ route } : HomeScreenProps) {
         <Text style={homeStyles.renderListText}>Refresh List</Text>
     </Pressable>
 
-    <Pressable style={homeStyles.renderListButton2} onPress={() => {setShowCompleted(!showCompleted); if (text == "Show Completed Info") {setText("Show All Info");} else { setText("Show Completed Info"); }}}>
+    <Pressable style={homeStyles.renderListButton2} onPress={() => {
+        setShowCompleted(!showCompleted); 
+        if (text == "Show Completed Info") { setText("Show All Info") } else { setText("Show Completed Info"); }}}>
         <Text style={homeStyles.renderListText}>{text}</Text>
     </Pressable>
     </View>
@@ -49,7 +58,7 @@ function HomeScreen({ route } : HomeScreenProps) {
     <FlatList 
         style={homeStyles.flatListView}
         data={showCompleted ? completedInfo : info}
-        keyExtractor={(item) => item.id.toString()} 
+        keyExtractor={((item: ApiInfo) => item.id.toString())} 
         renderItem={({item})=> {
             return (
             <View style={homeStyles.flatList}>
