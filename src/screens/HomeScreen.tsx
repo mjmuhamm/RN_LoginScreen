@@ -5,9 +5,12 @@ import { URL } from '../api/url'
 import { ApiInfo, HomeScreenProps } from '../types/index'
 import { useState, useEffect, useMemo } from 'react'
 
-
+//Optimization Hooks 
 function HomeScreen({ route } : HomeScreenProps) {
     const { email } = route.params
+
+    const [ showCompleted, setShowCompleted ] = useState(false)
+    const [ text, setText ] = useState("Show Completed Info")
     
     const [ info, setInfo ] = useState<ApiInfo[]>([]);
 
@@ -21,6 +24,10 @@ function HomeScreen({ route } : HomeScreenProps) {
         }, 300);
     };
 
+    const completedInfo = useMemo(() => {
+        return info.filter(item => item.completed);
+    }, [info]);
+
      useEffect(() => {
         loadInfo()
     }, [])
@@ -29,13 +36,19 @@ function HomeScreen({ route } : HomeScreenProps) {
     <View style={homeStyles.firstView}>
     <Text>Hello {email}. Please review a sample API call.</Text>
 
+    <View style={homeStyles.buttonView}>
     <Pressable style={homeStyles.renderListButton} onPress={loadInfo}>
         <Text style={homeStyles.renderListText}>Refresh List</Text>
     </Pressable>
-    
+
+    <Pressable style={homeStyles.renderListButton2} onPress={() => {setShowCompleted(!showCompleted); if (text == "Show Completed Info") {setText("Show All Info");} else { setText("Show Completed Info"); }}}>
+        <Text style={homeStyles.renderListText}>{text}</Text>
+    </Pressable>
+    </View>
+
     <FlatList 
         style={homeStyles.flatListView}
-        data={info}
+        data={showCompleted ? completedInfo : info}
         keyExtractor={(item) => item.id.toString()} 
         renderItem={({item})=> {
             return (

@@ -155,6 +155,14 @@ export const homeStyles = StyleSheet.create({
         borderRadius: 20, 
         marginTop: 10
     },
+    renderListButton2: {
+        backgroundColor: "indigo", 
+        width: 200, 
+        alignItems: 'center', 
+        borderRadius: 20, 
+        marginTop: 10,
+        marginLeft: 10
+    },
     flatListView: {
         marginTop: 15
     },
@@ -164,5 +172,8 @@ export const homeStyles = StyleSheet.create({
     itemStyle: {
         fontWeight: "bold",
         fontSize: 16
+    },
+    buttonView: {
+        flexDirection: "row"
     }
 });
